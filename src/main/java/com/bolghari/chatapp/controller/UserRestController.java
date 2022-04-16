@@ -13,9 +13,6 @@ public class UserRestController {
     private UserService service;
 
 
-
-
-
     @PostMapping("/create")
     public void createUser(@RequestBody User user) {
         service.createUser(user);
