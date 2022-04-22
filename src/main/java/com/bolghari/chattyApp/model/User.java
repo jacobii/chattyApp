@@ -1,6 +1,6 @@
-package com.bolghari.chatapp.model;
+package com.bolghari.chattyApp.model;
 
-import com.bolghari.chatapp.security.UserRole;
+import com.bolghari.chattyApp.security.UserRole;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,13 +21,10 @@ public class User {
 
     private int age;
 
-    public User(String name, String email, String username, String password, int age, UserRole role) {
-        this.name = name;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.age = age;
-        this.role = role;
+
+
+    public User() {
+
     }
 
     public UserRole getRole() {
@@ -85,4 +82,5 @@ public class User {
     public void setAge(int age) {
         this.age = age;
     }
+
 }

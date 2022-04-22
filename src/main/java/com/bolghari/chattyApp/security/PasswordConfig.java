@@ -1,4 +1,4 @@
-package com.bolghari.chatapp.security;
+package com.bolghari.chattyApp.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

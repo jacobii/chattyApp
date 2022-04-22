@@ -1,7 +1,7 @@
-package com.bolghari.chatapp.security;
+package com.bolghari.chattyApp.security;
 
-import com.bolghari.chatapp.model.User;
-import com.bolghari.chatapp.repository.UserRepository;
+import com.bolghari.chattyApp.model.User;
+import com.bolghari.chattyApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +17,7 @@ public class AccountDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         User user = repository.findByUsername(username);
 
-        if(user ==null) {
+        if(user == null) {
             throw new UsernameNotFoundException("User was not found");
         }
         return new AccountDetails(user);

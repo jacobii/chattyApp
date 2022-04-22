@@ -1,4 +1,4 @@
-package com.bolghari.chatapp.security;
+package com.bolghari.chattyApp.security;
 
 public enum UserPermission {
     USER_READ("user:read"),
@@ -17,4 +17,6 @@ public enum UserPermission {
     public String getPermission() {
         return permission;
     }
+
+
 }

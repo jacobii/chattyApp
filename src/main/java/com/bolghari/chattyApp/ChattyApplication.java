@@ -1,13 +1,13 @@
-package com.bolghari.chatapp;
+package com.bolghari.chattyApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ChatAppApplication {
+public class ChattyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ChatAppApplication.class, args);
+        SpringApplication.run(ChattyApplication.class, args);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.bolghari.chatapp;
+package com.bolghari.chattyApp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

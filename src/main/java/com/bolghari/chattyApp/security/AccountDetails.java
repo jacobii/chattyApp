@@ -1,9 +1,12 @@
-package com.bolghari.chatapp.security;
+package com.bolghari.chattyApp.security;
 
-import com.bolghari.chatapp.model.User;
+import com.bolghari.chattyApp.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
-import java.util.Collection;
+
+import java.util.*;
+
+
 
 public class AccountDetails implements UserDetails {
 
@@ -13,10 +16,15 @@ public class AccountDetails implements UserDetails {
         this.user = user;
     }
 
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+        UserRole role = user.getRole();
+        return  role.getSimpleGrantedAuthorities();
+ }
+
+
 
     @Override
     public String getPassword() {
@@ -26,6 +34,10 @@ public class AccountDetails implements UserDetails {
     @Override
     public String getUsername() {
         return user.getUsername();
+    }
+
+    public String getId() {
+        return user.getId();
     }
 
     @Override
