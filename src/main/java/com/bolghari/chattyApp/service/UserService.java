@@ -27,12 +27,25 @@ public class UserService {
 
 
     public User createUser(User user) {
-        System.out.println(user.getPassword());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        System.out.println(user);
-        user.setRole(UserRole.USER);
-        return userRepo.save(user);
+        if(checkIfUserExist(user)) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRole(UserRole.USER);
+            return userRepo.save(user);
+        }else {
+            System.out.println("hej");
+            return null;
+        }
+
+        }
+
+public  boolean checkIfUserExist(User user) {
+    User notExist = userRepo.findByUsername(user.getUsername());
+    if(notExist == null) {
+        return true;
+    }else {
+        return false;
     }
+}
 
 
 

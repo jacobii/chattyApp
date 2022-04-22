@@ -9,9 +9,10 @@
     <title>Sign up</title>
 </head>
 <body>
+<nav th:replace="header :: nav"></nav>
 
     <div class="container-lg">
-                <form action="#" th:action="@{/createUser}" th:object = "${user}" method = "POST">
+                <form action="#" th:action="@{/signup}" th:object = "${user}" method = "POST">
 
                     <input type = "text" required th:field="*{name}"
                            placeholder="Name" class="form-control mb-4 col-4">
