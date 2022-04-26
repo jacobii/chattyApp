@@ -24,10 +24,14 @@
         </li>
         <li class="nav-item">
             <div sec:authorize="isAuthenticated()">
-                <div class="ml-auto p-2">
+                <div class="ml-auto p-2 d-flex">
                     <form th:action="@{/logout}" method="post">
                         <input type="submit" value="Sign Out" class="btn btn-danger">
                     </form>
+                    <a href="/myprofile">
+                    <button value="My profile" class="btn btn-primary pr-2 pl-2"> My profile
+                    </button>
+                    </a>
                 </div>
             </div>
 

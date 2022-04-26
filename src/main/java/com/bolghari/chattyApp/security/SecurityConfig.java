@@ -11,6 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableWebSecurity
@@ -52,8 +56,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
+                .and().rememberMe()
+                .tokenValiditySeconds(2592000).key("verySecretKey") // 30 days
                 .and()
-                .logout().logoutSuccessUrl("/").permitAll()
+                .logout()
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID", "remember-me").permitAll()
+                .logoutSuccessUrl("/login?logout")
                 .and()
                 .httpBasic();
     }

@@ -12,9 +12,11 @@ import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/user")
 public class UserRestController {
     @Autowired
@@ -33,14 +35,16 @@ public class UserRestController {
     }
 
     @GetMapping("/user/{username}")
+    @PreAuthorize("#username == principal.username")
     public User getUser(@PathVariable("username") String username) {
-        return service.getUser(username);
+            return service.getUser(username);
+
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("#id == principal.id")
     public void deleteUser(@PathVariable("id") String id) {
-
 
         service.deleteUser(id);
     }
