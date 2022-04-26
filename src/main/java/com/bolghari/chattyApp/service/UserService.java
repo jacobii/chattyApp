@@ -21,52 +21,47 @@ public class UserService {
     }
 
 
-
     @Autowired
     UserRepository userRepo;
 
 
     public User createUser(User user) {
-        if(checkIfUserExist(user)) {
+        if (checkIfUserExist(user)) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRole(UserRole.USER);
             return userRepo.save(user);
-        }else {
-            System.out.println("hej");
+        } else {
             return null;
         }
-
-        }
-
-public  boolean checkIfUserExist(User user) {
-    User notExist = userRepo.findByUsername(user.getUsername());
-    if(notExist == null) {
-        return true;
-    }else {
-        return false;
     }
-}
 
-
+    public boolean checkIfUserExist(User user) {
+        User notExist = userRepo.findByUsername(user.getUsername());
+        if (notExist == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public List<User> getUsers() {
-        //return userRepo.findAll();
         return userRepo.findAll();
     }
 
     public User getUser(String username) {
-       User user = userRepo.findUsersByName(username);
+        User user = userRepo.findUsersByName(username);
         System.out.println(user);
-       if(user != null) {
-           return user;
-       }
-    return null;
+        if (user != null) {
+            return user;
+        }
+        return null;
     }
+
     public void deleteUser(String id) {
-       Optional<User> user = userRepo.findById(id);
-       if (user != null) {
-        userRepo.deleteById(id);
-       }
+        Optional<User> user = userRepo.findById(id);
+        if (user != null) {
+            userRepo.deleteById(id);
+        }
     }
 
 }

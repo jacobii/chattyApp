@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.*;
 
 
-
 public class AccountDetails implements UserDetails {
 
     private User user;
@@ -17,13 +16,11 @@ public class AccountDetails implements UserDetails {
     }
 
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         UserRole role = user.getRole();
-        return  role.getSimpleGrantedAuthorities();
- }
-
+        return role.getSimpleGrantedAuthorities();
+    }
 
 
     @Override

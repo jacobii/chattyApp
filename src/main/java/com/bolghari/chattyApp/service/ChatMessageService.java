@@ -6,15 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ChatMessageService {
     @Autowired
     ChatMessageRepository chatMsgRepo;
 
-    public ChatMessage createMessage(ChatMessage message) {
+    public ChatMessage createMessage(ChatMessage messageContent) {
+        return chatMsgRepo.save(messageContent);
+    }
 
-        return chatMsgRepo.save(message);
+    public void deleteAllMessages() {
+        chatMsgRepo.deleteAll();
     }
 
     public List<ChatMessage> getAllMessages() {
@@ -23,5 +27,12 @@ public class ChatMessageService {
 
     public List<ChatMessage> findChatMessageByRoomId(String id) {
         return chatMsgRepo.findChatMessageByRoomId(id);
+    }
+
+    public void deleteMessage(String id) {
+        Optional<ChatMessage> msg = chatMsgRepo.findById(id);
+        if (msg != null) {
+            chatMsgRepo.deleteById(id);
+        }
     }
 }

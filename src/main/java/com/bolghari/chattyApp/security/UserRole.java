@@ -10,14 +10,14 @@ import static com.bolghari.chattyApp.security.UserPermission.*;
 
 public enum UserRole {
 
-USER(Sets.newHashSet(USER_READ, USER_READ)),
-ADMIN(Sets.newHashSet(
-        ADMIN_READ,
-        ADMIN_WRITE,
-        USER_READ,
-        USER_WRITE
-)),
-GUEST(Sets.newHashSet(GUEST_READ));
+    USER(Sets.newHashSet(USER_READ, USER_READ)),
+    ADMIN(Sets.newHashSet(
+            ADMIN_READ,
+            ADMIN_WRITE,
+            USER_READ,
+            USER_WRITE
+    )),
+    GUEST(Sets.newHashSet(GUEST_READ));
 
 
     private final Set<UserPermission> permission;

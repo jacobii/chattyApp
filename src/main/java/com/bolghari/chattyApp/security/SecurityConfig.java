@@ -18,8 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-
-
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -48,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/user/create", "/signup").permitAll()
+                .antMatchers("/", "/user/create", "/signup", "/rooms").permitAll()
                 .antMatchers("/user/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
@@ -57,10 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll()
                 .and()
-               .httpBasic();
+                .httpBasic();
     }
-
-
 
 
 }

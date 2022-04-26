@@ -18,13 +18,21 @@ public class User {
     @Indexed(unique = true)
     private String username;
     private String password;
+    private String profileImg;
 
     private int age;
 
 
-
     public User() {
 
+    }
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
     }
 
     public UserRole getRole() {

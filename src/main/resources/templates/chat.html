@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+
+<body>
+<nav th:replace="header :: nav"></nav>
+
+<main class="content">
+    <div class="container p-0">
+
+        <h1 class="h3 mb-3 text-center">Chat</h1>
+
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-12 col-lg-5 col-xl-3 border-right">
+
+                    <div class="px-4 d-none d-md-block">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <input type="text" class="form-control my-3" placeholder="Search...">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <p>Du är admin</p>
+                    </div>
+                    <div th:each="r: ${room}">
+
+
+                        <div th:unless="${r.locked == true and not #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+
+                            <div href="#" class="list-group-item list-group-item-action border-0">
+
+                                <ul class="list-group">
+                                    <a th:href="@{'/chat/' + ${r.id}}">
+                                        <li class="list-group-item">
+                                            <img th:src="${r.roomImg}" class="rounded-circle mr-1"
+                                                 th:alt="${r.roomName}" width="40" height="40">
+                                            <div class="flex-grow-1 ml-3">
+
+                                                <b><p th:text="${r.roomName}"></p></b>
+                                            </div>
+                                        </li>
+                                    </a>
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="d-block d-lg-none mt-1 mb-0">
+                </div>
+                <div class="col-12 col-lg-7 col-xl-9">
+                    <div class="py-2 px-4 border-bottom d-none d-lg-block">
+                        <div class="d-flex align-items-center py-1 text-center">
+                            <div class="text-center">
+                                <b><p class="text-center" th:text="${roomName}"></p></b>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="position-relative">
+                        <div class="chat-messages p-4">
+
+                            <div th:each="m: ${messages}">
+
+
+                                <div class="chat-message-right pb-4">
+                                    <div class="d-flex flex-row mr-3 ml-3">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                             class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+                                        <div class="font-weight-bold mb-0 mr-3 ml-3 "><b><p class="font-weight-bold"
+                                                                                            th:text="${m.username}"></p>
+                                        </b></div>
+                                    </div>
+                                    <div class="text-muted small text-nowrap mt-2">2:33 am</div>
+
+                                    <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+
+                                        <p th:text="${m.message}"></p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="flex-grow-0 py-3 px-4 border-top" id="scrollToBottom">
+                    <div class="input-group">
+                        <form action="#" th:action="@{'/message/' + ${roomId}}" th:object="${messageContent}"
+                              method="POST">
+                            <input type="text" class="form-control" placeholder="Type your message"
+                                   th:field="*{message}">
+                            <input type="hidden" th:value="${roomId}" th:attr="name='roomId'"/>
+                            <input type="hidden" th:value="${authName}" th:attr="name='username'"/>
+                            <button class="btn btn-primary">Send</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+
+</body>
+</html>

@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ChatRoomService {
-
 
 
     @Autowired
@@ -21,6 +21,10 @@ public class ChatRoomService {
 
     public List<ChatRoom> getAllRooms() {
         return chatRoomRepo.findAll();
+    }
+
+    public Optional<ChatRoom> getRoomName(String id) {
+        return chatRoomRepo.findById(id);
     }
 
     public void deleteRoom(String id) {

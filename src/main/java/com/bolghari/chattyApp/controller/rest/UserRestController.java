@@ -3,6 +3,9 @@ package com.bolghari.chattyApp.controller.rest;
 import com.bolghari.chattyApp.model.User;
 import com.bolghari.chattyApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
@@ -30,22 +33,21 @@ public class UserRestController {
     }
 
     @GetMapping("/user/{username}")
-        public User getUser(@PathVariable("username") String username) {
-            return service.getUser(username);
+    public User getUser(@PathVariable("username") String username) {
+        return service.getUser(username);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/{id}")
-        public void deleteUser(@PathVariable("id") String id) {
+    public void deleteUser(@PathVariable("id") String id) {
 
 
         service.deleteUser(id);
-        }
+    }
 
 
-
-        @PutMapping("/edit")
+    @PutMapping("/edit")
     public void updateUser() {
 
-        }
+    }
 }

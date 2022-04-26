@@ -7,7 +7,15 @@ public class ChatRoom {
     private String id;
     private String roomName;
     private boolean locked;
+    private String roomImg;
 
+    public String getRoomImg() {
+        return roomImg;
+    }
+
+    public void setRoomImg(String roomImg) {
+        this.roomImg = roomImg;
+    }
 
     public String getId() {
         return id;
