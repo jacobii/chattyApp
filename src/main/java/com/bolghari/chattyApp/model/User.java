@@ -4,9 +4,10 @@ import com.bolghari.chattyApp.security.UserRole;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Document("user")
-public class User {
+public class User  {
     private UserRole role;
 
     @Id

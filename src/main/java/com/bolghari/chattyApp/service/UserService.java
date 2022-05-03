@@ -44,6 +44,10 @@ public class UserService {
         }
     }
 
+    public Optional<User> getUserById(String id) {
+        return userRepo.findById(id);
+    }
+
     public List<User> getUsers() {
         return userRepo.findAll();
     }
@@ -61,6 +65,25 @@ public class UserService {
         Optional<User> user = userRepo.findById(id);
         if (user != null) {
             userRepo.deleteById(id);
+        }
+    }
+
+    public void updateUserRole(User userToEdit, String id) {
+       User user = userRepo.getById(id);
+        if (user != null) {
+            user.setRole(userToEdit.getRole() == null ? user.getRole() : userToEdit.getRole());
+            userRepo.save(user);
+        }
+    }
+
+    public void updateUser(User userToEdit, String id) {
+        User user = userRepo.getById(id);
+        if (user != null) {
+            if (!(userToEdit.getProfileImg() == null || userToEdit.getProfileImg().equals(""))) user.setProfileImg(userToEdit.getProfileImg());
+            if (!(userToEdit.getName() == null || userToEdit.getName().equals(""))) user.setName(userToEdit.getName());
+            if (!(userToEdit.getEmail() == null || userToEdit.getEmail().equals(""))) user.setEmail(userToEdit.getEmail());
+            if (!(userToEdit.getPassword() == null || userToEdit.getPassword().equals(""))) user.setPassword(passwordEncoder.encode(userToEdit.getPassword()));
+                userRepo.save(user);
         }
     }
 

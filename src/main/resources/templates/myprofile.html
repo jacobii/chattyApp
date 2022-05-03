@@ -12,7 +12,10 @@
 </head>
 <body>
 <nav th:replace="header :: nav"></nav>
+<div class="flex-box">
 <h1>My profile</h1>
+<h2>Edit my profile</h2>
+</div>
 <p th:text="${authentication}"></p>
 
 <table class="table">
@@ -24,6 +27,7 @@
         <th scope="col">Age</th>
     </tr>
     </thead>
+
     <tbody>
     <tr th:each="user: ${userDetails}">
         <td th:text="${user.name}"></td>
@@ -31,6 +35,60 @@
         <td th:text="${user.username}"></td>
         <td th:text="${user.age}"></td>
     </tr>
+    </tbody>
+    </table>
+
+
+<br>
+    <br>
+    <h2>Your messages:</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Username</th>
+        <th scope="col">Message</th>
+        <th scope="col">Message-id</th>
+        <th scope="col">Room</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="mess: ${messages}">
+        <td th:text="${mess.username}"></td>
+        <td th:text="${mess.message}"></td>
+        <td th:text="${mess.id}"></td>
+        <td>
+        <a th:href="@{'/chat/'+ ${mess.roomId}}" th:text="${mess.roomId}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<br>
+
+<h3 class="text-center">Edit my profile</h3>
+<div class="container-lg" th:each="user: ${userDetails}">
+    <form action="#" th:action="@{'/editMyProfile/' + ${user.id}}" th:object="${user}" method="POST">
+        <p>Username:</p>
+        <input type="text"  th:value="${user.username}" disabled
+               placeholder="Username" class="form-control mb-4 col-4">
+        <p>Name:</p>
+        <input type="text"  th:field="*{name}"
+               placeholder="Name" class="form-control mb-4 col-4">
+        <p>Email:</p>
+        <input type="email"  th:field="*{email}"
+               placeholder="Email" class="form-control mb-4 col-4">
+
+        <p th:text="${user.age}">Age:</p>
+        <input type="number"  th:field="*{age}"
+               placeholder="Age" class="form-control mb-4 col-4">
+        <p>Password:</p>
+        <input type="password" minlength="3"  th:field="*{password}"
+               placeholder="Password" class="form-control mb-4 col-4">
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary col-2" th:text="${title}">Edit</button>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>

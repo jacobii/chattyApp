@@ -25,8 +25,16 @@ public class ChatMessageService {
         return chatMsgRepo.findAll();
     }
 
+    public Optional<ChatMessage> getMessageById(String id) {
+        return chatMsgRepo.findById(id);
+    }
+
     public List<ChatMessage> findChatMessageByRoomId(String id) {
         return chatMsgRepo.findChatMessageByRoomId(id);
+    }
+
+    public List<ChatMessage> getMessagesByUser(String username) {
+        return chatMsgRepo.findAllMessagesByUser(username);
     }
 
     public void deleteMessage(String id) {

@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
@@ -27,8 +28,10 @@ public class ChatRoomRestController {
     // ROOMS
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/create")
-    public void createRoom(@RequestBody ChatRoom room) {
+    public  ResponseEntity<String> createRoom(@RequestBody ChatRoom room) {
+
         roomService.createChatRoom(room);
+        return new ResponseEntity<>("Succesfully created the room: "+room.getRoomName(), HttpStatus.OK);
     }
 
 
@@ -59,14 +62,31 @@ public class ChatRoomRestController {
     public List<ChatMessage> getMessagesFromRoom(@PathVariable("room") String id) {
         return messageService.findChatMessageByRoomId(id);
     }
+    @PreAuthorize("#username == principal.username or hasRole('ROLE_ADMIN')")
+    @GetMapping("/messages/{username}")
+    public List<ChatMessage> getMessagesFromUser(@PathVariable("username") String username) {
+        return messageService.getMessagesByUser(username);
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/deleteall")
     public @ResponseBody
-    ResponseEntity<Void> deleteAllMessages() {
-        HttpHeaders httpHeader = new HttpHeaders();
-        messageService.deleteAllMessages();
-        httpHeader.add("description", "all users have successfully been deleted");
-        return ResponseEntity.status(HttpStatus.OK).headers(httpHeader).build();
+    ResponseEntity<String> deleteAllMessages() {
+        List<ChatMessage> exist = messageService.getAllMessages();
+        if(!exist.isEmpty()) {
+            messageService.deleteAllMessages();
+            return new ResponseEntity<>("Successfully deleted all messsage ", HttpStatus.OK);
+        }
+        return new ResponseEntity("No messages found..",HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping ("/message/delete/{id}")
+    public ResponseEntity<String> deleteMessage(@PathVariable("id") String id ) {
+        Optional<ChatMessage> exist = messageService.getMessageById(id);
+        if(!exist.isEmpty()) {
+            messageService.deleteMessage(id);
+            return new ResponseEntity<>("Successfully deleted messsage with id: "+id, HttpStatus.OK);
+        }
+        return new ResponseEntity("No message found..",HttpStatus.NOT_FOUND);
     }
 }

@@ -8,13 +8,14 @@ import com.bolghari.chattyApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.Optional;
+
+@org.springframework.stereotype.Controller
 @CrossOrigin(origins = "http://localhost:8080")
-public class UserController {
+public class Controller {
 
     @Autowired
     private ChatRoomService roomService;
@@ -39,6 +40,22 @@ public class UserController {
         service.createUser(user);
     }
 
+    @PostMapping("/editMyProfile/{userid}")
+    public String editUser(@ModelAttribute("user") User user, @PathVariable("userid") String userid) {
+        service.updateUser(user, userid);
+        return "redirect:/myprofile/";
+    }
+
+
+    @PostMapping("/message/delete/{id}/{roomId}")
+    public String deleteMessage(Model model, @PathVariable("id") String id, @PathVariable("roomId") String roomId) {
+        Optional<ChatMessage> a = messageService.getMessageById(id);
+        if(!a.isEmpty()) {
+            messageService.deleteMessage(id);
+        }
+        return "redirect:/chat/" + roomId;
+    }
+
     @GetMapping("/login")
     public String login() {
         return "login";
@@ -48,9 +65,12 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/myprofile")
     public String myProfile(Model model, Authentication authentication) {
+        User user = new User();
         model.addAttribute("authentication", authentication != null ? authentication.getName() : "Not authorized");
         model.addAttribute("userDetails", service.getUser(authentication.getName()));
         model.addAttribute("title", "My profile");
+        model.addAttribute("messages", messageService.getMessagesByUser(authentication.getName()));
+        model.addAttribute("user", user);
         return "myprofile";
     }
 
@@ -72,6 +92,7 @@ public class UserController {
     public String getMessages(Model model, @PathVariable("roomId") String roomId, Authentication authentication) {
         ChatMessage messageContent = new ChatMessage();
         model.addAttribute("messageContent", messageContent);
+        model.addAttribute("usernamePic", service.getUser(messageContent.getUsername()));
         model.addAttribute("messages", messageService.findChatMessageByRoomId(roomId));
         model.addAttribute("roomId", roomId);
         model.addAttribute("roomName", roomService.getRoomName(roomId).get().getRoomName());

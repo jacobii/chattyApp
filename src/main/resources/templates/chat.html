@@ -80,6 +80,7 @@
                             <div th:each="m: ${messages}">
 
 
+
                                 <div class="chat-message-right pb-4">
                                     <div class="d-flex flex-row mr-3 ml-3">
                                         <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
@@ -93,7 +94,16 @@
                                     <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
 
                                         <p th:text="${m.message}"></p>
+                                        <div th:if="${authName == m.username || #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+
+                                        <form action="#" th:action="@{'/message/delete/' + ${m.id} + '/' + ${roomId}}" th:method="POST" >
+                                            <button type="submit" id="submitButton">Delete </button>
+                                        </form>
                                     </div>
+                                    </div>
+
+
+
                                 </div>
 
                             </div>
