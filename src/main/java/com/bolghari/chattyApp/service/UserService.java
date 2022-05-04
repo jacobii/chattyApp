@@ -82,6 +82,7 @@ public class UserService {
             if (!(userToEdit.getProfileImg() == null || userToEdit.getProfileImg().equals(""))) user.setProfileImg(userToEdit.getProfileImg());
             if (!(userToEdit.getName() == null || userToEdit.getName().equals(""))) user.setName(userToEdit.getName());
             if (!(userToEdit.getEmail() == null || userToEdit.getEmail().equals(""))) user.setEmail(userToEdit.getEmail());
+            if (!(userToEdit.getAge() <= 0)) user.setAge(userToEdit.getAge());
             if (!(userToEdit.getPassword() == null || userToEdit.getPassword().equals(""))) user.setPassword(passwordEncoder.encode(userToEdit.getPassword()));
                 userRepo.save(user);
         }

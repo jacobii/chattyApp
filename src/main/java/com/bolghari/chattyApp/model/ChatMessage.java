@@ -1,13 +1,11 @@
 package com.bolghari.chattyApp.model;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class ChatMessage {
     @Id
@@ -16,14 +14,14 @@ public class ChatMessage {
     private String roomId;
     private String message;
     private String username;
-    @CreatedDate
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
-    public LocalDateTime getCreatedAt() {
+
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 

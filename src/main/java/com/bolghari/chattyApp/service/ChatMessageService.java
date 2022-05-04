@@ -5,6 +5,7 @@ import com.bolghari.chattyApp.repository.ChatMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,8 @@ public class ChatMessageService {
     ChatMessageRepository chatMsgRepo;
 
     public ChatMessage createMessage(ChatMessage messageContent) {
+        Date date = new Date();
+        messageContent.setCreatedAt(date);
         return chatMsgRepo.save(messageContent);
     }
 

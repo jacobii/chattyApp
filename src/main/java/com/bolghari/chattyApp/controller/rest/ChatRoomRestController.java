@@ -31,7 +31,7 @@ public class ChatRoomRestController {
     public  ResponseEntity<String> createRoom(@RequestBody ChatRoom room) {
 
         roomService.createChatRoom(room);
-        return new ResponseEntity<>("Succesfully created the room: "+room.getRoomName(), HttpStatus.OK);
+        return new ResponseEntity<>("Successfully created the room: "+room.getRoomName(), HttpStatus.OK);
     }
 
 

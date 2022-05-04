@@ -14,7 +14,6 @@
 <nav th:replace="header :: nav"></nav>
 <div class="flex-box">
 <h1>My profile</h1>
-<h2>Edit my profile</h2>
 </div>
 <p th:text="${authentication}"></p>
 
@@ -78,16 +77,19 @@
         <input type="email"  th:field="*{email}"
                placeholder="Email" class="form-control mb-4 col-4">
 
-        <p th:text="${user.age}">Age:</p>
+        <p>Age:</p>
         <input type="number"  th:field="*{age}"
                placeholder="Age" class="form-control mb-4 col-4">
         <p>Password:</p>
         <input type="password" minlength="3"  th:field="*{password}"
                placeholder="Password" class="form-control mb-4 col-4">
         <div class="text-center">
-            <button type="submit" class="btn btn-primary col-2" th:text="${title}">Edit</button>
+            <button type="submit" class="btn btn-primary col-2">Change my details</button>
         </div>
+
     </form>
+    <br>
+    <br>
 </div>
 
 </body>

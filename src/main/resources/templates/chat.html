@@ -26,15 +26,13 @@
 
                     <div class="px-4 d-none d-md-block">
                         <div class="d-flex align-items-center">
-                            <div class="flex-grow-1">
-                                <input type="text" class="form-control my-3" placeholder="Search...">
-                            </div>
+
                         </div>
                     </div>
 
 
                     <div sec:authorize="hasRole('ROLE_ADMIN')">
-                        <p>Du är admin</p>
+                        <p class="px-4">Du är admin</p>
                     </div>
                     <div th:each="r: ${room}">
 
@@ -89,7 +87,9 @@
                                                                                             th:text="${m.username}"></p>
                                         </b></div>
                                     </div>
-                                    <div class="text-muted small text-nowrap mt-2">2:33 am</div>
+                                    <div class="text-muted small text-nowrap mt-2">
+                                        <p th:text="${m.createdAt}"> </p>
+                                        </div>
 
                                     <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
 
@@ -97,7 +97,7 @@
                                         <div th:if="${authName == m.username || #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
 
                                         <form action="#" th:action="@{'/message/delete/' + ${m.id} + '/' + ${roomId}}" th:method="POST" >
-                                            <button type="submit" id="submitButton">Delete </button>
+                                            <button type="submit" id="submitButton" class="btn btn-outline-danger btn-sm">Delete </button>
                                         </form>
                                     </div>
                                     </div>

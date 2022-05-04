@@ -35,9 +35,13 @@ public class Controller {
     }
 
     @PostMapping("/signup")
-    public void saveUser(@ModelAttribute("user") User user) {
-
-        service.createUser(user);
+    public String createUser(@ModelAttribute("user") User user) {
+        User success = service.createUser(user);
+        if(success == null) {
+            return "redirect:/signup/";
+        }else {
+            return "redirect:/myprofile/";
+        }
     }
 
     @PostMapping("/editMyProfile/{userid}")
